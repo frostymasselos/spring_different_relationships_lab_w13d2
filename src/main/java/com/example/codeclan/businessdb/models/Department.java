@@ -1,12 +1,26 @@
 package com.example.codeclan.businessdb.models;
 
-import java.util.ArrayList;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name="departments")
 public class Department {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
+
+    @Column(name = "name")
     private String name;
-    private ArrayList<Employee> employees;
+
+    @JsonIgnoreProperties("department")
+    @OneToMany(mappedBy = "department") //exactly as we spelt it?
+    private List<Employee> employees;
 
     public Department(String name) {
         this.id = id;
@@ -30,11 +44,11 @@ public class Department {
         this.name = name;
     }
 
-    public ArrayList<Employee> getEmployees() {
+    public List<Employee> getEmployees() {
         return employees;
     }
 
-    public void setEmployees(ArrayList<Employee> employees) {
+    public void setEmployees(List<Employee> employees) {
         this.employees = employees;
     }
 }
